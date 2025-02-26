@@ -1,6 +1,6 @@
 # Лабораторная №1
 
-## Цель
+## Цель лабораторной работы
 Запустить в докере рабочий веб-сервер nginx
 
 ## Реализация
@@ -30,6 +30,8 @@
 <img width="99" alt="Снимок экрана 2025-02-27 в 01 40 09" src="https://github.com/user-attachments/assets/595d3ac7-ee86-4466-a2e2-ce37b1237aab" />
 
 7. Создать файл docker-compose для старта и сборки
+
+
 В корне проекта есть файл `docker-compose.yml`:
 
 <img width="612" alt="Снимок экрана 2025-02-27 в 01 40 41" src="https://github.com/user-attachments/assets/9e6fe751-75c4-465a-885f-ed39e70860c5" />
@@ -37,3 +39,7 @@
 Запуск `docker-compose build`:
 
 <img width="1136" alt="Снимок экрана 2025-02-27 в 01 31 26" src="https://github.com/user-attachments/assets/d0f3784f-c897-492b-a746-dcb400f966d6" />
+
+Запуск `docker-compose up -d`:
+
+<img width="318" alt="Снимок экрана 2025-02-27 в 01 43 46" src="https://github.com/user-attachments/assets/8d8adf34-ef84-4819-ae78-946c087fac12" />
