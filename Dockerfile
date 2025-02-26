@@ -21,4 +21,3 @@ EXPOSE 8080
 # Запускаем nginx от непривилегированного пользователя
 USER nginx
 CMD ["nginx", "-g", "daemon off;"]
-
