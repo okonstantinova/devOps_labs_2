@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Копируем package.json и устанавливаем зависимости
 COPY package.json package-lock.json ./
-RUN npm install --only=production
+RUN npm install --only=production && npm cache clean --force
 
 # Копируем исходный код
 COPY . .
