@@ -1,20 +1,17 @@
-# Используем минимальный Node.js образ
-FROM node:18-alpine AS runtime
+# Используем build как базовый образ
+FROM build AS runtime
 
-# Создаем непривилегированного пользователя
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем собранный проект из build
+# Копируем собранное приложение
 COPY --from=build /app/dist /app
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/server.js /app/server.js
 
-# Переключаемся на пользователя
+# Запускаем контейнер от непривилегированного пользователя
 USER appuser
 
-# Запуск приложения
-CMD ["node", "/app/server.js"]
+EXPOSE 3000
+
+CMD ["node", "server.js"]
 
