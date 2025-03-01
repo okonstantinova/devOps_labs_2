@@ -1,0 +1,15 @@
+# Базовый образ с Node.js
+FROM node:18-alpine AS system
+
+# Создаем непривилегированного пользователя
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Переключаемся на пользователя
+USER appuser
+
+# Определяем точку входа
+CMD ["node"]
+
