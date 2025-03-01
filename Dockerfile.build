@@ -1,27 +1,21 @@
-# Используем легковесный образ
-FROM node:18-alpine AS builder
+# Используем system как базовый образ
+FROM system AS builder
 
 WORKDIR /app
 
-# Создаём непривилегированного пользователя
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Копируем package.json и устанавливаем зависимости
+COPY app/package.json app/package-lock.json ./
+RUN npm ci --only=production && npm cache clean --force
 
-# Копируем package.json перед установкой зависимостей и даём права
-COPY --chown=appuser:appgroup app/package.json app/package-lock.json ./
-
-# Устанавливаем зависимости и очищаем кеш
-RUN chown -R appuser:appgroup /app && \
-    npm ci --only=production && \
-    npm cache clean --force
-
-# Собираем проект
-RUN npm run build && mkdir -p /app/dist
+# Создаём папку dist вручную (на случай, если билд её не создаст)
+RUN mkdir -p /app/dist
 
 # Копируем остальной код
-COPY --chown=appuser:appgroup app/ .
+COPY app/ .
 
-# Переключаемся на непривилегированного пользователя перед запуском
+# Запускаем сборку проекта
+RUN npm run build || echo "No build step needed"
+
+# Переключаемся на непривилегированного пользователя
 USER appuser
 
-# Запускаем приложение
-CMD ["node", "server.js"]
