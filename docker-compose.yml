@@ -1,14 +1,35 @@
 version: "3.8"
 
 services:
+  system:
+    build:
+      context: .
+      dockerfile: Dockerfile.system
+    container_name: my_system_app
+
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    container_name: my_build_app
+    depends_on:
+      - system
+
   app:
     build:
       context: .
-      dockerfile: Dockerfile.runtime 
+      dockerfile: Dockerfile.runtime
     container_name: my_runtime_app
-    restart: always 
+    depends_on:
+      - build
+    restart: always
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     environment:
-      - NODE_ENV=production
-      - PORT=3000
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - APP_NAME=${APP_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+
