@@ -1,28 +1,12 @@
-FROM bellsoft/liberica-openjdk-alpine:17 AS build
+FROM eclipse-temurin:21-jdk-alpine
 
-# Устанавливаем Maven
-RUN apk add --no-cache maven
-
-# Указываем рабочую директорию
-WORKDIR /app
-
-# Копируем pom.xml отдельно для кэширования зависимостей
-COPY pom.xml ./
-RUN mvn dependency:go-offline
-
-# Копируем остальные исходники
-COPY src ./src
-RUN mvn clean package -DskipTests
-
-# Финальный образ
-FROM bellsoft/liberica-openjdk-alpine:17
-
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN adduser -D appuser
 
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+COPY target/hobbie-backend-0.0.1-SNAPSHOT.jar app.jar
 
 USER appuser
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
 

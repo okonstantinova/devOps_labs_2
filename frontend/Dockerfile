@@ -1,18 +1,15 @@
-FROM node:18-alpine AS build
+FROM node:20-alpine
+
+RUN adduser -D appuser
 
 WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci && npm cache clean --force
-
 COPY . .
-RUN npm run build
 
-FROM nginx:alpine
-
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
-COPY --from=build /app/build /usr/share/nginx/html
+RUN npm install && \
+    npm run build && \
+    npm cache clean --force
 
 USER appuser
+
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]
 
