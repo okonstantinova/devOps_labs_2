@@ -82,6 +82,7 @@ volumes:
   - ./nginx/cache:/var/cache/nginx
 ```
 9. Контейнеры должены запускатьсь от непривилегированного пользователя
+
 В Dockerfile:
 ```
 RUN adduser -D appuser
