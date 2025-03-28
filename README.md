@@ -101,7 +101,7 @@ RUN npm install && npm run build && npm cache clean --force
 # Запуск контейнеров
 Все сервисы успешно стартовали, и они взаимодействуют друг с другом через Docker-сеть. Контейнер nginx-proxy работает как точка входа и проксирует трафик к остальным сервисам:
 ```
-Container devops_labs_2-db-1           Created                                                                                                                                           0.0s 
+ ✔ Container devops_labs_2-db-1           Created                                                                                                                                           0.0s 
  ✔ Container devops_labs_2-backend-1      Created                                                                                                                                           0.0s 
  ✔ Container devops_labs_2-frontend-1     Created                                                                                                                                           0.0s 
  ✔ Container devops_labs_2-nginx-proxy-1  Created                                                                                                                                           0.0s 
